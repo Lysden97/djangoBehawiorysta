@@ -1,0 +1,94 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html lang="pl">
+
+
+<head>
+    <title>{% block title %}Eli Zalewski - Behawiorysta{% endblock %}</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="{% static 'website/css/main.css' %}"/>
+
+    <!---
+            flatpickr
+    --->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/light.css">
+
+
+</head>
+<body class="is-preload">
+
+<!-- Header -->
+<div id="header">
+
+    <div class="top">
+
+        <!-- Logo -->
+        <div id="logo">
+            <span class="image avatar48"><img src="{% static  'website/images/avatar.jpg' %}" alt=""/></span>
+            <h1 id="title">Eli Zalewski</h1>
+            <p>Behawiorysta</p>
+        </div>
+
+        <!-- Nav -->
+        <nav id="nav">
+            <ul>
+                <li><a href="{% url 'index' %}" id="top-link"><span class="icon solid fa-home">Start</span></a></li>
+                <li><a href="{% url 'index' %}#portfolio" id="portfolio-link"><span class="icon solid fa-th">Usługi</span></a></li>
+                <li><a href="{% url 'index' %}#about" id="about-link"><span class="icon solid fa-user">O mnie</span></a></li>
+                <li><a href="{% url 'index' %}#when" id="about-link"><span class="icon solid fa-question">Kiedy warto zgłosić się do behawiorysty?</span></a></li>
+                <li><a href="{% url 'index' %}#contact" id="contact-link"><span class="icon solid fa-envelope">Umów się</span></a></li>
+            </ul>
+        </nav>
+
+    </div>
+
+    <div class="bottom">
+
+        <!-- Social Icons -->
+{#        <ul class="icons">#}
+{#            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>#}
+{#            <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>#}
+{#            <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>#}
+{#            <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>#}
+{#            <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>#}
+{#        </ul>#}
+
+    </div>
+
+</div>
+{% block content %}
+
+
+
+{% endblock %}
+
+<!-- Footer -->
+<div id="footer">
+
+    <!-- Copyright -->
+    <ul class="copyright">
+        <li>&copy; {% now 'Y' %} Eli Zalewski. Wszystkie prawa zastrzeżone.</li>
+        <li>Polityka prywatności: <a href="{% url 'privacy-policy' %}">Kliknij tutaj</a></li>
+    </ul>
+
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'website/js/jquery.min.js' %}"></script>
+<script src="{% static 'website/js/jquery.scrolly.min.js' %}"></script>
+<script src="{% static 'website/js/jquery.scrollex.min.js' %}"></script>
+<script src="{% static 'website/js/browser.min.js' %}"></script>
+<script src="{% static 'website/js/breakpoints.min.js' %}"></script>
+<script src="{% static 'website/js/util.js' %}"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pl.js"></script>
+<script src="{% static 'website/js/main.js' %}"></script>
+
+
+
+</body>
+</html>
