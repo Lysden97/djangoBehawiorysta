@@ -1,0 +1,11 @@
+.idea/
+.venv
+.env
+db.sqlite3
+*.pyc
+.vscode
+node_modules
+package-lock.json
+project
+__pycache__/
+*.iml
