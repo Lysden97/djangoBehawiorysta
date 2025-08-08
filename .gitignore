@@ -1,4 +1,6 @@
 .idea/
+.venv/
+staticfiles/
 .venv
 .env
 db.sqlite3
