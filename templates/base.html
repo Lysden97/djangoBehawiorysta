@@ -5,9 +5,13 @@
 
 
 <head>
-    <title>{% block title %}Eli Zalewski - Behawiorysta{% endblock %}</title>
+    <title>{% block title %}Eli Zalewski - Behawiorysta psów i kotów{% endblock %}</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <meta name="description"
+          content={% block meta_description %}"Jako dyplomowany behawiorysta pomogę ci zadbać o dobro twojego zwierzaka. Oferuję konsultacje behawioralne, treningi i szkolenie psów, a także usługi petsitterskie."{% endblock %}>
+    <meta name="keywords"
+          content="behawiorysta, behawiorysta psów, behawiorysta kotów, behawiorysta warszawa, behawiorysta mazowieckie, behawiorysta psów warszawa, behawiorysta kotów warszawa, behawiorysta psów mazowieckie, behawiorysta kotów mazowieckie, trener psów, treser psów, petsitting, petsitter, warszawa, petsitting warszawa, petsitter warszawa, wyprowadzanie psów, szkolenie pozytywne, szkolenie pozytywne psów, trening psów, szkolenie podstawowe, szkolenie posłuszeństwa, posłuszeństwo, grzeczny pies, grzeczny kot, zwierzak, kotek, piesek">
     <link rel="stylesheet" href="{% static 'website/css/main.css' %}"/>
 
     <!---
@@ -36,10 +40,14 @@
         <nav id="nav">
             <ul>
                 <li><a href="{% url 'index' %}" id="top-link"><span class="icon solid fa-home">Start</span></a></li>
-                <li><a href="{% url 'index' %}#portfolio" id="portfolio-link"><span class="icon solid fa-th">Usługi</span></a></li>
-                <li><a href="{% url 'index' %}#about" id="about-link"><span class="icon solid fa-user">O mnie</span></a></li>
-                <li><a href="{% url 'index' %}#when" id="about-link"><span class="icon solid fa-question">Kiedy warto zgłosić się do behawiorysty?</span></a></li>
-                <li><a href="{% url 'index' %}#contact" id="contact-link"><span class="icon solid fa-envelope">Umów się</span></a></li>
+                <li><a href="{% url 'index' %}#about" id="about-link"><span class="icon solid fa-user">O mnie</span></a>
+                </li>
+                <li><a href="{% url 'index' %}#when" id="about-link"><span class="icon solid fa-question">Kiedy warto zgłosić się do behawiorysty?</span></a>
+                </li>
+                <li><a href="{% url 'index' %}#portfolio" id="portfolio-link"><span
+                        class="icon solid fa-th">Usługi</span></a></li>
+                <li><a href="{% url 'index' %}#contact" id="contact-link"><span
+                        class="icon solid fa-envelope">Umów się</span></a></li>
             </ul>
         </nav>
 
@@ -47,14 +55,32 @@
 
     <div class="bottom">
 
+        <ul class="contact-list">
+            <li>
+                <a class="contact-link" href="tel:+48507246814">
+                    <span class="icon solid fa-phone" aria-hidden="true"></span>
+                    <span class="sr-only">Telefon:</span>
+                    <span class="contact-text">+48 507 246 814</span>
+                </a>
+            </li>
+            <li>
+                <a class="contact-link" href="mailto:elizalewski@proton.me">
+                    <span class="icon solid fa-envelope" aria-hidden="true"></span>
+                    <span class="sr-only">E‑mail:</span>
+                    <span class="contact-text">elizalewski@proton.me</span>
+                </a>
+            </li>
+        </ul>
+
+
         <!-- Social Icons -->
-{#        <ul class="icons">#}
-{#            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>#}
-{#            <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>#}
-{#            <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>#}
-{#            <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>#}
-{#            <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>#}
-{#        </ul>#}
+        {#        <ul class="icons">#}
+        {#            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>#}
+        {#            <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>#}
+        {#            <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>#}
+        {#            <li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>#}
+        {#            <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>#}
+        {#        </ul>#}
 
     </div>
 
@@ -87,7 +113,6 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pl.js"></script>
 <script src="{% static 'website/js/main.js' %}"></script>
-
 
 
 </body>
