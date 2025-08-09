@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    container_name: django_behawiorysta_web
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=djangoBehawiorysta.settings
+    command: gunicorn djangoBehawiorysta.wsgi:application --bind 0.0.0.0:8000 --workers 3
+
+  nginx:
+    image: nginx:stable
+    container_name: django_behawiorysta_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web

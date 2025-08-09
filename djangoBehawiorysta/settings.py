@@ -29,20 +29,20 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['http://localhost:8000'])
 
 STORAGES = {
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
 }
 
-SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', default=True)
-SECURE_HSTS_SECONDS = env.int('SECURE_HSTS_SECONDS', default=31536000)
-SECURE_REFERRER_POLICY = "same-origin"
-X_FRAME_OPTIONS = "DENY"
-SECURE_CONTENT_TYPE_NOSNIFF = True
-
-WHITENOISE_MAX_AGE = 31536000
+# SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', default=True)
+# SECURE_HSTS_SECONDS = env.int('SECURE_HSTS_SECONDS', default=31536000)
+# SECURE_REFERRER_POLICY = "same-origin"
+# X_FRAME_OPTIONS = "DENY"
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+#
+# WHITENOISE_MAX_AGE = 31536000
 
 
 
