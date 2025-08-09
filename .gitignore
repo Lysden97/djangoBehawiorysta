@@ -3,7 +3,8 @@
 venv
 staticfiles/
 .venv
-.env
+.env.local
+.env.prod
 db.sqlite3
 *.pyc
 .vscode

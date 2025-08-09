@@ -1,25 +1,31 @@
-version: '3.9'
-
 services:
-  web:
-    build: .
-    container_name: django_behawiorysta_web
-    restart: unless-stopped
+  db:
+    image: postgres:17
     ports:
-      - "9000:9000"
+      - "5432:5432"
     volumes:
-      - .:/app
-    environment:
-      - DJANGO_SETTINGS_MODULE=djangoBehawiorysta.settings
-    command: gunicorn djangoBehawiorysta.wsgi:application --bind 0.0.0.0:8000 --workers 3
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env.prod
 
-  nginx:
-    image: nginx:stable
-    container_name: django_behawiorysta_nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-    volumes:
-      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+  django-web:
+    build: .
+    container_name: django-docker
     depends_on:
-      - web
+      - db
+    volumes:
+      - ./static:/app/staticfiles
+    env_file:
+      - .env.prod
+
+  frontend-proxy:
+    image: nginx:latest
+    ports:
+      - "9001:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./static:/static:ro
+    depends_on:
+      - django-web
+volumes:
+  postgres_data:

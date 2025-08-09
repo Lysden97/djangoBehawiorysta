@@ -1,27 +1,50 @@
-# 1. Bazowy obraz z Pythonem
-FROM python:3.10-slim
+# Stage 1: Base build stage
+FROM python:3.13-slim AS builder
 
-# 2. Ustawiamy katalog roboczy w kontenerze
+# Create the app directory
+RUN mkdir /app
+
+# Set the working directory
 WORKDIR /app
 
-# 3. Kopiujemy pliki wymagane do instalacji pakietów
-COPY requirements.txt /app/
+# Set environment variables to optimize Python
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# 4. Instalujemy zależności
+# Install dependencies first for caching benefit
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
 
-# 5. Kopiujemy cały kod aplikacji
-COPY . /app/
+# Stage 2: Production stage
+FROM python:3.13-slim
 
-# 6. Tworzymy katalog na statyczne pliki
-RUN mkdir -p /app/staticfiles
+RUN useradd -m -r appuser && \
+   mkdir /app && \
+   chown -R appuser /app
 
-# 7. Zbieramy statyczne pliki Django (musisz mieć poprawnie ustawione STATIC_ROOT w settings.py)
-RUN python manage.py collectstatic --noinput
+# Copy the Python dependencies from the builder stage
+COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
+COPY --from=builder /usr/local/bin/ /usr/local/bin/
 
-# 8. Otwieramy port 9000
-EXPOSE 9000
+# Set the working directory
+WORKDIR /app
 
-# 9. Komenda startowa uruchamia Gunicorna na porcie 8000
-CMD ["gunicorn", "djangoBehawiorysta.wsgi:application", "--bind", "0.0.0.0:9000", "--workers", "3"]
+# Copy application code
+COPY --chown=appuser:appuser . .
+
+# Set environment variables to optimize Python
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Switch to non-root user
+USER appuser
+
+# Expose the application port
+EXPOSE 8000
+
+# Make entry file executable
+RUN chmod +x  /app/entrypoint.prod.sh
+
+# Start the application using Gunicorn
+CMD ["/app/entrypoint.prod.sh"]
