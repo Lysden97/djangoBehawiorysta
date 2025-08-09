@@ -32,17 +32,13 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:9000').split(',')
 
 
-# SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', default=True)
-# SECURE_HSTS_SECONDS = env.int('SECURE_HSTS_SECONDS', default=31536000)
-# SECURE_REFERRER_POLICY = "same-origin"
-# X_FRAME_OPTIONS = "DENY"
-# SECURE_CONTENT_TYPE_NOSNIFF = True
-#
-# WHITENOISE_MAX_AGE = 31536000
+# SECURE_SSL_REDIRECT = True
+# SECURE_HSTS_SECONDS = 31536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 
 
-# Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
