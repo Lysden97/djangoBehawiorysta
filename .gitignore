@@ -13,3 +13,6 @@ package-lock.json
 project
 __pycache__/
 *.iml
+.key
+.cer
+ssl/

@@ -1756,7 +1756,7 @@ article > .container, article:last-child {
     display: block;
     width: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: top;
 }
 
 .image.avatar48 {
@@ -1784,6 +1784,7 @@ article > .container, article:last-child {
     width: 100%;
     height: 400px;
     margin: 0 0 2em 0;
+    object-position: center top;
 }
 
 .image.left {
@@ -1807,7 +1808,7 @@ article > .container, article:last-child {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: top;
 }
 
 .image.uniform {
@@ -1817,6 +1818,7 @@ article > .container, article:last-child {
     overflow: hidden;
     border-radius: 8px;
     margin: 10px;
+    object-position: top;
 }
 
 .image.uniform img {
