@@ -56,7 +56,7 @@ class ContactView(View):
             email = request.POST.get('email')
             phone = request.POST.get('phone')
             address = request.POST.get('address')
-            appointment_date = request.POST.get('appointment-date')
+            preferred_date = request.POST.get('preferred-date')
             animal_info = request.POST.get('animal-info')
             gender = request.POST.get('gender')
             animal_breed = request.POST.get('animal-breed')
@@ -70,7 +70,7 @@ class ContactView(View):
                 email,
                 phone,
                 address,
-                appointment_date,
+                preferred_date,
                 animal_info,
                 gender,
                 animal_breed,
@@ -85,7 +85,7 @@ class ContactView(View):
                 'email': email,
                 'phone': phone,
                 'address': address,
-                'appointment_date': appointment_date,
+                'preferred_date': preferred_date,
                 'animal_info': animal_info,
                 'gender': gender,
                 'animal_breed': animal_breed,

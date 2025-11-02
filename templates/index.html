@@ -105,6 +105,7 @@
 
                 <header>
                     <h2>Usługi</h2>
+                    <p>Ceny podane dla usług świadczonych w Warszawie</p>
                 </header>
 
                 {#                <p>Wywalamy to?</p>#}
@@ -194,8 +195,8 @@
                                                                 placeholder="Adres" required/></div>
 
                         <div class="col-6 col-12-mobile">
-                            <input type="text" name="appointment-date" id="appointment-date"
-                                   placeholder="Preferowany termin" required data-input/>
+                            <input type="text" name="preferred-date" id="preferred-date"
+                                   placeholder="Preferowany termin" onfocus="(this.type='date')" onblur="(this.type='text')" required />
                         </div>
 
                         <div class="col-6 col-12-mobile"><input type="text" name="animal-info" id="animal-info"
@@ -220,7 +221,7 @@
                                 <option value="Pierwsza konsultacja 2h (250 zł)">Pierwsza konsultacja 2h (250 zł)
                                 </option>
                                 <option value="Kolejna konsultacja 1h (150 zł)">Kolejna konsultacja 1h (150 zł)</option>
-                                <option value="Trening 1h (130 zł)">Trening 1h (30 zł)</option>
+                                <option value="Trening 1h (130 zł)">Trening 1h (130 zł)</option>
                                 <option value="Konsultacja online 1h (150 zł)">Konsultacja online (150 zł)</option>
                                 <option value="Opieka w miejscu zamieszkania (do ustalenia)">Opieka w miejscu zamieszkania (do ustalenia)</option>
                                 <option value="Spacer 30min (60 zł)">Spacer 30min (60 zł)</option>

@@ -139,7 +139,7 @@
             theme: 'light',
             showMonths: 1,
             animate: true,
-            altInput: true,
+            altInput: false,
             altFormat: 'j F Y (l)',
             enableTime: false,
             position: 'auto'
@@ -208,7 +208,23 @@ $(document).ready(function() {
         }
     });
 });
+$(window).on('load', function () {
+    var privacyUrl = $('#cookie-script').data('privacy-url');
 
+    window.cookieconsent.initialise({
+        palette: {
+            popup: { background: "#000" },
+            button: { background: "#f1d600" }
+        },
+        theme: "classic",
+        content: {
+            message: "Ta strona używa plików cookies.",
+            dismiss: "Akceptuję",
+            link: "Dowiedz się więcej",
+            href: privacyUrl
+        }
+    });
+});
 
 
 

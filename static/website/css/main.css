@@ -1747,86 +1747,54 @@ article > .container, article:last-child {
 /* Image */
 
 .image {
-    display: inline-block;
-    border: 0;
-    overflow: hidden;
-}
+		display: inline-block;
+		border: 0;
+	}
 
-.image img {
-    display: block;
-    width: 100%;
-    object-fit: cover;
-    object-position: top;
-}
+		.image img {
+			display: block;
+			width: 100%;
+            object-position: top;
+		}
 
-.image.avatar48 {
-    width: 48px;
-    height: 48px;
-    background: #f00;
-    border-radius: 10px;
-}
+		.image.avatar48 {
+			width: 48px;
+			height: 48px;
+			background: #f00;
+            border-radius: 15px;
+		}
 
-.image.avatar48 img {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
-}
+			.image.avatar48 img {
+				width: 48px;
+				height: 48px;
+                border-radius: 15px;
+			}
 
+		.image.fit {
+			display: block;
+			width: 100%;
+		}
 
-.image.fit {
-    display: block;
-    width: 100%;
-    height: 300px;
-}
+		.image.featured {
+			display: block;
+			width: 100%;
+			margin: 0 0 2em 0;
+		}
 
-.image.featured {
-    display: block;
-    width: 100%;
-    height: 400px;
-    margin: 0 0 2em 0;
-    object-position: center top;
-}
+		.image.left {
+			float: left;
+			margin: 0 2em 2em 0;
+		}
 
-.image.left {
-    float: left;
-    margin: 0 2em 2em 0;
-    width: 200px;
-    height: 150px;
-    overflow: hidden;
-}
+		.image.centered {
+			display: block;
+			margin: 0 0 2em 0;
+		}
 
-.image.centered {
-    display: block;
-    margin: 0 0 2em 0;
-    width: 300px;
-    height: 200px;
-    overflow: hidden;
-}
-
-.image.centered img {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-}
-
-.image.uniform {
-    width: 280px;
-    height: 200px;
-    display: inline-block;
-    overflow: hidden;
-    border-radius: 8px;
-    margin: 10px;
-    object-position: top;
-}
-
-.image.uniform img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
+			.image.centered img {
+				margin: 0 auto;
+				width: auto;
+			}
 
 
 /* List */
@@ -1882,6 +1850,7 @@ form label {
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],
+form input[type="date"],
 form select,
 form textarea {
     position: relative;
@@ -1905,6 +1874,7 @@ form textarea {
 form input[type="text"]:focus,
 form input[type="email"]:focus,
 form input[type="password"]:focus,
+form input[type="date"]:focus,
 form select:focus,
 form textarea:focus {
     box-shadow: 0 0 2px 1px #8ebebc;
@@ -1914,6 +1884,7 @@ form textarea:focus {
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],
+form input[type="date"],
 form select {
     line-height: 1.25em;
 }

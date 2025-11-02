@@ -1,24 +1,17 @@
+version: '3.9'
+
 services:
-  db:
-    image: postgres:17
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    env_file:
-      - .env.prod
-
   django-web:
-    build: .
-    container_name: django-docker
-    depends_on:
-      - db
-    volumes:
-       - static_volume:/app/staticfiles
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /app/entrypoint.prod.sh
+#    volumes:
+#      - ./staticfiles:/app/staticfiles
     env_file:
       - .env.prod
 
-  frontend-proxy:
+  nginx:
     image: nginx:latest
     ports:
       - "80:80"
@@ -26,11 +19,8 @@ services:
     volumes:
       - ./ssl/_.behawiorysta.warszawa.pl_private_key.key:/etc/ssl/private/_.behawiorysta.warszawa.pl_private_key.key:ro
       - ./ssl/behawiorysta.warszawa.pl_ssl_certificate.cer:/etc/ssl/certs/behawiorysta.warszawa.pl_ssl_certificate.cer:ro
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./staticfiles:/staticfiles
+      - ./nginx.conf:/etc/nginx/nginx.conf
       - ./mime.types:/etc/nginx/mime.types:ro
-      - static_volume:/staticfiles:ro
     depends_on:
       - django-web
-volumes:
-  postgres_data:
-  static_volume:
