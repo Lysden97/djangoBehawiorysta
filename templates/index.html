@@ -1,274 +1,367 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Behawiorysta psów i kotów Warszawa | Eli Zalewski{% endblock %}
+{% block meta_description %}Behawiorysta psów i kotów w Warszawie. Konsultacje behawioralne, treningi, konsultacje online i wsparcie przy lęku, agresji, reaktywności oraz problemach domowych.{% endblock %}
+{% block og_title %}Behawiorysta psów i kotów Warszawa | Eli Zalewski{% endblock %}
+{% block og_description %}Konsultacje behawioralne dla psów i kotów w Warszawie oraz online. Praca metodami pozytywnymi i praktyczny plan działania dla opiekuna.{% endblock %}
+{% block twitter_title %}Behawiorysta psów i kotów Warszawa | Eli Zalewski{% endblock %}
+{% block twitter_description %}Konsultacje behawioralne dla psów i kotów w Warszawie oraz online.{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://behawiorysta.warszawa.pl/#business",
+  "name": "Eli Zalewski - Behawiorysta psów i kotów",
+  "url": "https://behawiorysta.warszawa.pl/",
+  "image": "https://behawiorysta.warszawa.pl{% static 'website/images/tlo_gora.avif' %}",
+  "telephone": "+48507246814",
+  "email": "elizalewski@proton.me",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Balkonowa 3/21",
+    "addressLocality": "Warszawa",
+    "postalCode": "03-329",
+    "addressCountry": "PL"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Warszawa"
+    },
+    {
+      "@type": "Country",
+      "name": "Polska"
+    }
+  ],
+  "priceRange": "60-250 PLN",
+  "description": "Konsultacje behawioralne dla psów i kotów w Warszawie oraz online. Wsparcie przy lęku, agresji, reaktywności, problemach domowych i adaptacji nowych zwierząt.",
+  "serviceType": [
+    "Konsultacja behawioralna psa",
+    "Konsultacja behawioralna kota",
+    "Trening psa",
+    "Konsultacja behawioralna online",
+    "Opieka nad zwierzętami"
+  ],
+  "sameAs": []
+}
+</script>
+{% endblock %}
+
 {% block content %}
-    <!-- Main -->
-    <div id="main">
-
-        <!-- Intro -->
-        <section id="top" class="one dark cover">
-            <div class="container">
-
-                <header>
-                    <h2 class="alt">Behawiorysta Psów i Kotów</h2>
-                    <p class="name">Eli Zalewski</p>
-                </header>
-
-                <footer>
-                    <a href="#about" class="button scrolly">Dalej</a>
-                </footer>
-
-            </div>
-        </section>
-
-        <!-- About Me -->
-        <section id="about" class="three">
-            <div class="container">
-
-                <header>
-                    <h2>O mnie</h2>
-                </header>
-
-                <a href="#about" class="image featured"><img src="{% static  'website/images/omnie.jpg' %}" alt=""/></a>
-
-                <p>Cześć, jestem Eli, ukończyłem studia na kierunkach Behawiorystyka zwierząt towarzyszących na
-                    Uniwersytecie SWPS w Warszawie, a także Antropozoologia na Uniwersytecie Warszawskim.
-
-                    Dzięki behawiorystyce poznałem tajniki pracy z naszymi czworonożnymi przyjaciółmi, treningu i
-                    rozwiązywania ich problemów. Antropozoologia dała mi szeroką perspektywę na miejsce zwierząt w
-                    naszym świecie i wielodziedzinową wiedzę, od bioetyki, po neuropsychologię.
-
-                    Dobro zwierzęcia z którym pracuję jest dla mnie najważniejsze – pracuję metodami pozytywnymi i
-                    zwracam uwagę na komunikację i komfort zwierząt.
-
-                    W pracy opieram się na sprawdzonych naukowo metodach szkolenia i rozwiązywania problemów
-                    behawioralnych. W swoim arsenale mam wiele sprawdzonych technik, które wyniosłem ze studiów, a także
-                    stale powiększam swoją wiedzę, między innymi o metodę Behavior Adjustment Training, autorstwa Grishy
-                    Stewart, która jest doskonałą odpowiedzą na problemy z reaktywnością zarówno wobec ludzi jak i
-                    zwierząt.</p>
-
-            </div>
-        </section>
-
-        <section id="when" class="three">
-            <div class="container">
-
-                <header>
-                    <h2>Kiedy warto zgłosić się do behawiorysty?</h2>
-                </header>
-
-                <a href="#when" class="image featured"><img src="{% static  'website/images/tlo_gora.jpg' %}"
-                                                            alt=""/></a>
-
-                <h2>Psy</h2>
-                <p>Do najczęstszych problemów należą między innymi:</p>
-                <ul class="ul-beh">
-                    <li>lęk separacyjny (m.in. niepokój, niszczenie przedmiotów, hałasowanie, odmawianie przyjmowania
-                        pokarmu podczas zostawania samemu),
-                    </li>
-                    <li>problemy w kontaktach z innymi psami lub ludźmi (agresja, obszczekiwanie, reaktywność),</li>
-                    <li>zaburzenia lękowe i fobie,</li>
-                    <li>gonienie rowerów,</li>
-                    <li>ciągnięcie na smyczy,</li>
-                    <li>obrona zasobów (np. miski z jedzeniem),</li>
-                    <li>agresja,</li>
-                    <li>zjadanie przedmiotów,</li>
-                </ul>
-
-                <h2>Koty</h2>
-                <p>U kotów natomiast najczęściej pojawia się:</p>
-                <ul class="ul-beh">
-                    <li>załatwianie się poza kuwetą,</li>
-                    <li>znaczenie terenu,</li>
-                    <li>drapanie mebli,</li>
-                    <li>lęki i fobie,</li>
-                    <li>jedzenie rzeczy niejadalnych,</li>
-                    <li>łysienie psychogenne,</li>
-                    <li>agresja,</li>
-                    <li>problemy w relacjach z innymi kotami w domu,</li>
-                    <li>wymuszanie uwagi,</li>
-                </ul>
-
-                <h3>Uwaga!</h3>
-                <p>
-                    Wizytę z behawiorystą warto umówić także, kiedy planujemy wprowadzić zwierzę do domu,
-                    aby uniknąć problemów w przyszłości. Dotyczy to szczególnie sytuacji, gdy wprowadzamy
-                    nowe zwierzę do już mieszkającego z nami rezydenta.
+<section class="hero-section" id="top">
+    <div class="hero-media" style="background-image: url('{% static 'website/images/tlo_gora.avif' %}');"></div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+        <div class="row align-items-end min-vh-100">
+            <div class="col-lg-8 col-xl-7">
+                <p class="eyebrow">Warszawa i konsultacje online</p>
+                <h1>Behawiorysta psów i kotów</h1>
+                <p class="hero-lead">
+                    Pomagam opiekunom zrozumieć zachowanie zwierząt i spokojnie przejść przez problemy lękowe,
+                    reaktywność, agresję, trudności domowe oraz adaptację nowych zwierząt.
                 </p>
-
+                <div class="hero-actions">
+                    <a class="btn btn-primary btn-lg" href="#contact">
+                        <span class="fas fa-calendar-check" aria-hidden="true"></span>
+                        Umów konsultację
+                    </a>
+                    <a class="btn btn-outline-light btn-lg" href="tel:+48507246814">
+                        <span class="fas fa-phone" aria-hidden="true"></span>
+                        +48 507 246 814
+                    </a>
+                </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
-        <!-- Portfolio -->
-        <section id="portfolio" class="two">
-            <div class="container">
-
-                <header>
-                    <h2>Usługi</h2>
-                    <p>Ceny podane dla usług świadczonych w Warszawie</p>
-                </header>
-
-                {#                <p>Wywalamy to?</p>#}
-
-                <div class="row">
-                    <div class="col-4 col-12-mobile">
-                        <article class="item">
-                            <img class="circle-image" src="{% static  'website/images/kiedybeh.jpg' %}" alt=""/>
-                            <header>
-                                <h3>Pierwsza konsultacja 2h (250 zł)</h3>
-                            </header>
-                        </article>
-                        <article class="item">
-                            <img class="circle-image" src="{% static  'website/images/kolejna_konsultacja.jpg' %}" alt=""/>
-                            <header>
-                                <h3>Kolejna konsultacja 1h (150 zł)</h3>
-                            </header>
-                        </article>
+<section class="section-padding bg-warm" id="about">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5">
+                <img src="{% static 'website/images/omnie.jpg' %}" alt="Eli Zalewski - behawiorysta psów i kotów" class="img-fluid image-soft">
+            </div>
+            <div class="col-lg-7">
+                <p class="eyebrow dark">O mnie</p>
+                <h2>Praca oparta na wiedzy, komunikacji i komforcie zwierzęcia.</h2>
+                <p>
+                    Cześć, jestem Eli. Ukończyłem studia na kierunku Behawiorystyka zwierząt towarzyszących
+                    na Uniwersytecie SWPS w Warszawie oraz Antropozoologię na Uniwersytecie Warszawskim.
+                </p>
+                <p>
+                    Pracuję metodami pozytywnymi i szukam rozwiązań, które są realne do wdrożenia w codziennym życiu
+                    opiekuna. W konsultacjach łączę praktykę treningową, obserwację relacji i wiedzę naukową.
+                </p>
+                <div class="row g-3 mt-3">
+                    <div class="col-sm-4">
+                        <div class="metric">
+                            <span class="fas fa-graduation-cap" aria-hidden="true"></span>
+                            <strong>SWPS</strong>
+                            <span>behawiorystyka</span>
+                        </div>
                     </div>
-                    <div class="col-4 col-12-mobile">
-                        <article class="item">
-                            <img class="circle-image" src="{% static  'website/images/portfolio3.jpg' %}" alt=""/>
-                            <header>
-                                <h3>Trening 1h (130 zł)</h3>
-                            </header>
-                        </article>
-                        <article class="item">
-                            <img class="circle-image" src="{% static  'website/images/portfolio4.jpg' %}" alt=""/>
-                            <header>
-                                <h3>Opieka w miejscu zamieszkania (do ustalenia)</h3>
-                            </header>
-                        </article>
+                    <div class="col-sm-4">
+                        <div class="metric">
+                            <span class="fas fa-university" aria-hidden="true"></span>
+                            <strong>UW</strong>
+                            <span>antropozoologia</span>
+                        </div>
                     </div>
-                    <div class="col-4 col-12-mobile">
-                        <article class="item">
-                            <img class="circle-image" src="{% static  'website/images/portfolio6.jpg' %}" alt=""/>
-                            <header>
-                                <h3>Konsultacja online 1h (150 zł)</h3>
-                            </header>
-                        </article>
-                        <article class="item">
-                            <img class="circle-image" src="{% static  'website/images/portfolio5.jpg' %}" alt=""/>
-                            <header>
-                                <h3>Spacer 30min (60 zł)</h3>
-                            </header>
-                        </article>
+                    <div class="col-sm-4">
+                        <div class="metric">
+                            <span class="fas fa-heart" aria-hidden="true"></span>
+                            <strong>Pozytywnie</strong>
+                            <span>bez presji</span>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </section>
-
-        <!-- Contact -->
-        <section id="contact" class="four">
-            <div class="container">
-
-                <header>
-                    <h2>Umów się</h2>
-                </header>
-
-                {% for message in messages %}
-                    <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
-                {% endfor %}
-
-                <p>Po wypełnieniu formularza skontaktuję się w celu potwierdzenia terminu :) </p>
-
-                <form method="post" action="{% url 'contact' %}">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-6 col-12-mobile"><input type="text" name="name" id="name" placeholder="Imię"
-                                                                required/></div>
-                        <div class="col-6 col-12-mobile"><input type="text" name="last-name" id="last-name"
-                                                                placeholder="Nazwisko" required/>
-                        </div>
-                        <div class="col-6 col-12-mobile"><input type="email" name="email" id="email"
-                                                                placeholder="E-mail" required/></div>
-                        <div class="col-6 col-12-mobile"><input type="text" name="phone" id="phone"
-                                                                pattern="[0-9 ]{9,11}"
-                                                                inputmode="numeric"
-                                                                placeholder="Telefon"
-                                                                oninput="this.value = this.value.replace(/\D/g, '').replace(/(\d{3})(?=\d)/g, '$1 ').trim()"
-                                                                maxlength="11"
-                                                                required
-                        />
-                        </div>
-                        <div class="col-6 col-12-mobile"><input type="text" name="address" id="address"
-                                                                placeholder="Adres" required/></div>
-
-                        <div class="col-6 col-12-mobile">
-                            <input type="text" name="preferred-date" id="preferred-date"
-                                   placeholder="Preferowany termin" onfocus="(this.type='date')" onblur="(this.type='text')" required />
-                        </div>
-
-                        <div class="col-6 col-12-mobile"><input type="text" name="animal-info" id="animal-info"
-                                                                placeholder="Imię oraz wiek zwierzaka" required/></div>
-
-                        <div class="col-6 col-12-mobile">
-                            <select name="gender" id="gender" required>
-                                <option value="" disabled selected hidden>Płeć zwierzaka</option>
-                                <option value="Samiec - niekastrowany">Samiec - niekastrowany</option>
-                                <option value="Samiec - kastrowany/sterylizowany">Samiec - kastrowany/sterylizowany
-                                </option>
-                                <option value="Samica - niekastrowana">Samica - niekastrowana</option>
-                                <option value="Samica - kastrowana/sterylizowana">Samica - kastrowana/sterylizowana
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col-6 col-12-mobile"><input type="text" name="animal-breed" id="animal-breed"
-                                                                placeholder=" Gatunek i rasa zwierzaka" required/></div>
-                        <div class="col-6 col-12-mobile">
-                            <select name="appointment-type" id="appointment-type" required>
-                                <option value="" disabled selected hidden>Typ wizyty</option>
-                                <option value="Pierwsza konsultacja 2h (250 zł)">Pierwsza konsultacja 2h (250 zł)
-                                </option>
-                                <option value="Kolejna konsultacja 1h (150 zł)">Kolejna konsultacja 1h (150 zł)</option>
-                                <option value="Trening 1h (130 zł)">Trening 1h (130 zł)</option>
-                                <option value="Konsultacja online 1h (150 zł)">Konsultacja online (150 zł)</option>
-                                <option value="Opieka w miejscu zamieszkania (do ustalenia)">Opieka w miejscu zamieszkania (do ustalenia)</option>
-                                <option value="Spacer 30min (60 zł)">Spacer 30min (60 zł)</option>
-                            </select>
-                        </div>
-                        <div class="col-12">
-                            <textarea name="message" id="message" placeholder="Opis problemu" required></textarea>
-                        </div>
-
-                        <div class="col-12">
-                            <div id="termsValidationMessage"></div>
-                            <div class="checkbox-wrapper" style="margin: 1em 0;">
-                                <input type="checkbox" id="terms" name="terms">
-                                <label for="terms"> *Wyrażam zgodę na przetwarzanie moich danych osobowych przez Eli
-                                    Zalewski - Behawiorysta Psów i Kotów, ul. Balkonowa 3/21, 03-329, Warszawa, w celu
-                                    kontaktu z opiekunem zwierzęcia i założenia karty pacjenta. Podanie danych osobowych
-                                    jest dobrowolne. Zostałem poinformowany, że przysługuje mi prawo dostępu do swoich
-                                    danych, możliwości ich poprawiania, żądania zaprzestania ich przetwarzania.</label>
-                            </div>
-                            <div id="privacyValidationMessage"></div>
-                            <div class="checkbox-wrapper" style="margin: 1em 0;">
-                                <input type="checkbox" id="privacy-policy" name="terms">
-                                <label for="privacy-policy"> *Oświadczam, że zapoznałam/em się z polityką prywatności <a
-                                        href="{% url 'privacy-policy' %}">(Kliknij tutaj)</a></label>
-                            </div>
-                            <div class="checkbox-wrapper" style="margin: 1em 0;">
-                                <input type="checkbox" id="newsletter" name="newsletter">
-                                <label for="newsletter">Wyrażam zgodę na przetwarzanie moich danych osobowych w postaci
-                                    adresu poczty elektronicznej, przez Eli Zalewski - Behawiorysta Psów i Kotów, ul.
-                                    Balkonowa 3/21, 03-329, Warszawa, w celu otrzymywania informacji handlowych i
-                                    marketingowych. Podanie danych osobowych jest dobrowolne. Zostałem poinformowany, że
-                                    przysługuje mi prawo dostępu do swoich danych, możliwości ich poprawiania, żądania
-                                    zaprzestania ich przetwarzania. (Opcjonalne)</label>
-                            </div>
-                        </div>
-                        <div class="recaptcha-container">
-                            <div class="g-recaptcha" data-sitekey="{{ recaptcha_public_key }}"></div>
-                        </div>
-                        <div class="col-12">
-                            <input type="submit" value="Wyślij"/>
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-        </section>
-
+        </div>
     </div>
+</section>
 
+<section class="section-padding" id="when">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow dark">Kiedy warto się zgłosić</p>
+            <h2>Nie musisz czekać, aż problem urośnie.</h2>
+            <p>
+                Konsultacja behawioralna pomaga zarówno przy trudnych zachowaniach, jak i przy planowaniu zmian w domu,
+                wprowadzeniu nowego zwierzęcia czy pracy nad codziennym spokojem.
+            </p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="support-panel h-100">
+                    <img src="{% static 'website/images/when.avif' %}" alt="Konsultacja behawioralna psa w Warszawie" class="support-image">
+                    <div>
+                        <h3>Behawiorysta psów</h3>
+                        <ul class="check-list">
+                            <li>Lęk separacyjny, niszczenie przedmiotów i hałasowanie.</li>
+                            <li>Reaktywność, obszczekiwanie, agresja lub trudne kontakty z psami i ludźmi.</li>
+                            <li>Ciągnięcie na smyczy, pogoń za rowerami, obrona zasobów.</li>
+                            <li>Zaburzenia lękowe, fobie i zjadanie przedmiotów.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="support-panel h-100">
+                    <img src="{% static 'website/images/cat.jpg' %}" alt="Konsultacja behawioralna kota w Warszawie" class="support-image">
+                    <div>
+                        <h3>Behawiorysta kotów</h3>
+                        <ul class="check-list">
+                            <li>Załatwianie się poza kuwetą i znaczenie terenu.</li>
+                            <li>Drapanie mebli, lęki, fobie i wymuszanie uwagi.</li>
+                            <li>Agresja oraz problemy w relacjach z innymi kotami w domu.</li>
+                            <li>Jedzenie rzeczy niejadalnych i łysienie psychogenne.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notice-band mt-4">
+            <span class="fas fa-lightbulb" aria-hidden="true"></span>
+            Warto umówić wizytę także przed wprowadzeniem nowego zwierzęcia do domu, szczególnie gdy mieszka już z Tobą rezydent.
+        </div>
+    </div>
+</section>
+
+<section class="section-padding bg-muted" id="services">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow dark">Usługi</p>
+            <h2>Konsultacje behawioralne i trening w Warszawie.</h2>
+            <p>Ceny dotyczą usług świadczonych w Warszawie. Zakres opieki i dojazdu można ustalić indywidualnie.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-xl-4">
+                <article class="service-card h-100">
+                    <img src="{% static 'website/images/kiedybeh.jpg' %}" alt="Pierwsza konsultacja behawioralna psa lub kota" class="service-image">
+                    <div class="service-body">
+                        <span class="service-price">250 zł</span>
+                        <h3>Pierwsza konsultacja</h3>
+                        <p>Dwugodzinne spotkanie, analiza problemu, wywiad i pierwsze zalecenia do pracy.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <article class="service-card h-100">
+                    <img src="{% static 'website/images/kolejna_konsultacja.jpg' %}" alt="Kolejna konsultacja behawioralna" class="service-image">
+                    <div class="service-body">
+                        <span class="service-price">150 zł</span>
+                        <h3>Kolejna konsultacja</h3>
+                        <p>Godzinne spotkanie kontrolne, korekta planu i dalsze prowadzenie przypadku.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <article class="service-card h-100">
+                    <img src="{% static 'website/images/portfolio3.jpg' %}" alt="Trening psa w Warszawie" class="service-image">
+                    <div class="service-body">
+                        <span class="service-price">130 zł</span>
+                        <h3>Trening</h3>
+                        <p>Godzina praktycznej pracy nad konkretną umiejętnością lub zachowaniem.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <article class="service-card h-100">
+                    <img src="{% static 'website/images/portfolio6.jpg' %}" alt="Konsultacja behawioralna online" class="service-image">
+                    <div class="service-body">
+                        <span class="service-price">150 zł</span>
+                        <h3>Konsultacja online</h3>
+                        <p>Zdalna analiza problemu i plan działania, gdy spotkanie na miejscu nie jest potrzebne.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <article class="service-card h-100">
+                    <img src="{% static 'website/images/portfolio5.jpg' %}" alt="Spacer i opieka nad zwierzęciem" class="service-image">
+                    <div class="service-body">
+                        <span class="service-price">60 zł</span>
+                        <h3>Spacer</h3>
+                        <p>Trzydziestominutowy spacer lub wsparcie w codziennej opiece.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <article class="service-card h-100">
+                    <img src="{% static 'website/images/portfolio4.jpg' %}" alt="Opieka nad zwierzęciem w domu opiekuna" class="service-image">
+                    <div class="service-body">
+                        <span class="service-price">do ustalenia</span>
+                        <h3>Opieka w domu</h3>
+                        <p>Opieka w miejscu zamieszkania dopasowana do potrzeb zwierzęcia i opiekuna.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-padding contact-section" id="contact">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-5">
+                <p class="eyebrow dark">Kontakt</p>
+                <h2>Umów konsultację behawioralną.</h2>
+                <p>
+                    Po wysłaniu formularza skontaktuję się w celu potwierdzenia szczegółów wizyty.
+                    Możesz też zadzwonić, jeśli sprawa wymaga szybszej rozmowy.
+                </p>
+                <div class="contact-card">
+                    <a href="tel:+48507246814">
+                        <span class="fas fa-phone" aria-hidden="true"></span>
+                        +48 507 246 814
+                    </a>
+                    <a href="mailto:elizalewski@proton.me">
+                        <span class="fas fa-envelope" aria-hidden="true"></span>
+                        elizalewski@proton.me
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="form-shell">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags|default:'info' }}" role="alert">{{ message }}</div>
+                    {% endfor %}
+
+                    <form method="post" action="{% url 'contact' %}" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label">Imię</label>
+                                <input type="text" name="name" id="name" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last-name" class="form-label">Nazwisko</label>
+                                <input type="text" name="last-name" id="last-name" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" name="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Telefon</label>
+                                <input type="tel" name="phone" id="phone" class="form-control" pattern="[0-9 ]{9,11}" inputmode="numeric" maxlength="11" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="address" class="form-label">Adres</label>
+                                <input type="text" name="address" id="address" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="preferred-date" class="form-label">Preferowany termin</label>
+                                <input type="text" name="preferred-date" id="preferred-date" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="animal-info" class="form-label">Imię i wiek zwierzęcia</label>
+                                <input type="text" name="animal-info" id="animal-info" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="animal-breed" class="form-label">Gatunek i rasa</label>
+                                <input type="text" name="animal-breed" id="animal-breed" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="gender" class="form-label">Płeć zwierzęcia</label>
+                                <select name="gender" id="gender" class="form-select" required>
+                                    <option value="" disabled selected>Wybierz</option>
+                                    <option value="Samiec - niekastrowany">Samiec - niekastrowany</option>
+                                    <option value="Samiec - kastrowany/sterylizowany">Samiec - kastrowany/sterylizowany</option>
+                                    <option value="Samica - niekastrowana">Samica - niekastrowana</option>
+                                    <option value="Samica - kastrowana/sterylizowana">Samica - kastrowana/sterylizowana</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="appointment-type" class="form-label">Typ wizyty</label>
+                                <select name="appointment-type" id="appointment-type" class="form-select" required>
+                                    <option value="" disabled selected>Wybierz</option>
+                                    <option value="Pierwsza konsultacja 2h (250 zł)">Pierwsza konsultacja 2h (250 zł)</option>
+                                    <option value="Kolejna konsultacja 1h (150 zł)">Kolejna konsultacja 1h (150 zł)</option>
+                                    <option value="Trening 1h (130 zł)">Trening 1h (130 zł)</option>
+                                    <option value="Konsultacja online 1h (150 zł)">Konsultacja online 1h (150 zł)</option>
+                                    <option value="Opieka w miejscu zamieszkania (do ustalenia)">Opieka w miejscu zamieszkania</option>
+                                    <option value="Spacer 30min (60 zł)">Spacer 30 min (60 zł)</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="message" class="form-label">Opis problemu</label>
+                                <textarea name="message" id="message" class="form-control" rows="5" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div id="termsValidationMessage"></div>
+                                <div class="form-check consent">
+                                    <input type="checkbox" id="terms" name="terms" class="form-check-input" required>
+                                    <label for="terms" class="form-check-label">Wyrażam zgodę na przetwarzanie moich danych osobowych w celu kontaktu i założenia karty pacjenta.</label>
+                                </div>
+                                <div id="privacyValidationMessage"></div>
+                                <div class="form-check consent">
+                                    <input type="checkbox" id="privacy-policy" name="privacy-policy" class="form-check-input" required>
+                                    <label for="privacy-policy" class="form-check-label">Oświadczam, że zapoznałam/em się z <a href="{% url 'privacy-policy' %}">polityką prywatności</a>.</label>
+                                </div>
+                                <div class="form-check consent">
+                                    <input type="checkbox" id="newsletter" name="newsletter" class="form-check-input">
+                                    <label for="newsletter" class="form-check-label">Chcę otrzymywać informacje handlowe i marketingowe na podany adres e-mail. Zgoda jest opcjonalna.</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="recaptcha-container">
+                                    <div class="g-recaptcha" data-sitekey="{{ recaptcha_public_key }}"></div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <span class="fas fa-paper-plane" aria-hidden="true"></span>
+                                    Wyślij zgłoszenie
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

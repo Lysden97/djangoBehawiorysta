@@ -1,13 +1,16 @@
 from django.conf import settings
+from django.contrib import messages
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.views import View
 from django.views.generic import TemplateView
-from django.contrib import messages
 import requests
 
+
+SITE_URL = 'https://behawiorysta.warszawa.pl'
 
 
 class IndexView(TemplateView):
@@ -17,6 +20,7 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['recaptcha_public_key'] = settings.RECAPTCHA_PUBLIC_KEY
         return context
+
 
 class PrivacyPolicyView(TemplateView):
     template_name = 'privacy-policy.html'
@@ -30,7 +34,6 @@ class ContactView(View):
 
     def post(self, request):
         try:
-
             recaptcha_response = request.POST.get('g-recaptcha-response')
 
             if not recaptcha_response:
@@ -42,9 +45,7 @@ class ContactView(View):
                 'response': recaptcha_response,
             }
 
-            response = requests.post('https://www.google.com/recaptcha/api/siteverify',
-                                     verify_data
-                                     )
+            response = requests.post('https://www.google.com/recaptcha/api/siteverify', verify_data)
             result = response.json()
 
             if not result['success']:
@@ -75,7 +76,8 @@ class ContactView(View):
                 gender,
                 animal_breed,
                 appointment_type,
-                message]):
+                message,
+            ]):
                 messages.error(request, 'Wszystkie pola są wymagane.')
                 return redirect('/#contact')
 
@@ -91,7 +93,7 @@ class ContactView(View):
                 'animal_breed': animal_breed,
                 'appointment_type': appointment_type,
                 'message': message,
-                'newsletter_status': 'Tak' if newsletter else 'Nie'
+                'newsletter_status': 'Tak' if newsletter else 'Nie',
             }
 
             html_message = render_to_string('emails/appointment_notification.html', context)
@@ -105,10 +107,32 @@ class ContactView(View):
                 html_message=html_message,
             )
 
-
             messages.success(request, 'Twoja wiadomość została wysłana. Dziękujemy!')
             return redirect('/#contact')
 
-        except Exception as e:
+        except Exception:
             messages.error(request, 'Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.')
             return redirect('/#contact')
+
+
+def robots_txt(request):
+    content = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        "Disallow: /contact/\n"
+        f"Sitemap: {SITE_URL}/sitemap.xml\n"
+    )
+    return HttpResponse(content, content_type='text/plain; charset=utf-8')
+
+
+def sitemap_xml(request):
+    content = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{SITE_URL}/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+"""
+    return HttpResponse(content, content_type='application/xml; charset=utf-8')
