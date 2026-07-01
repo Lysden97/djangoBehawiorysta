@@ -59,6 +59,7 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'index' %}#when">Kiedy pomagam</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'index' %}#services">Usługi</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'privacy-policy' %}">Prywatność</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}#contact">Kontakt</a></li>
                 <li class="nav-item ms-lg-3">
                     <a class="btn btn-primary nav-cta" href="{% url 'index' %}#contact">
                         <span class="fas fa-calendar-check" aria-hidden="true"></span>
@@ -73,7 +74,7 @@
 <main>
     {% block content %}{% endblock %}
 </main>
-
+<section class="section-padding contact-section" id="contact">
 <footer class="site-footer">
     <div class="container">
         <div class="row gy-4 align-items-start">
