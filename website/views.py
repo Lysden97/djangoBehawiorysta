@@ -9,7 +9,6 @@ from django.views import View
 from django.views.generic import TemplateView
 import requests
 
-
 SITE_URL = 'https://behawiorysta.warszawa.pl'
 
 
@@ -28,9 +27,9 @@ class PrivacyPolicyView(TemplateView):
 
 class ContactView(View):
     def get(self, request):
-        return render(request, 'index.html', {
-            'recaptcha_public_key': settings.RECAPTCHA_PUBLIC_KEY
-        })
+        # Formularz znajduje się na stronie głównej. Przekierowanie zapobiega
+        # udostępnianiu tej samej treści także pod adresem /contact/.
+        return redirect('/#contact', permanent=True)
 
     def post(self, request):
         try:
