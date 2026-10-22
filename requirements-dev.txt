@@ -1,0 +1,5 @@
+-r requirements.txt
+ruff>=0.12,<1
+pip-audit>=2.9,<3
+coverage>=7.9,<8
+playwright>=1.63,<2

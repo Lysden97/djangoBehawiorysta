@@ -18,3 +18,11 @@ __pycache__/
 ssl/
 data/certbot/
 .env.ssl
+.env
+data/
+backups/
+.ruff_cache/
+.coverage
+htmlcov/
+.agents
+.codex

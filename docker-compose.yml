@@ -6,6 +6,10 @@ services:
     command: /app/entrypoint.prod.sh
     volumes:
       - staticfiles:/app/staticfiles
+      - database:/app/data
+    environment:
+      DATABASE_PATH: /app/data/db.sqlite3
+      TRUST_PROXY_IP: "true"
     env_file:
       - .env.prod
     expose:
@@ -20,6 +24,8 @@ services:
 
   nginx:
     image: nginx:1.27-alpine
+    env_file:
+      - .env.ssl
     ports:
       - "80:80"
       - "443:443"
@@ -27,8 +33,10 @@ services:
       - staticfiles:/staticfiles:ro
       - ./nginx.conf:/etc/nginx/project/nginx.conf:ro
       - ./nginx.bootstrap.conf:/etc/nginx/project/nginx.bootstrap.conf:ro
+      - ./deploy/nginx-security-headers.conf:/etc/nginx/project/security-headers.conf:ro
       - ./deploy/nginx-entrypoint.sh:/usr/local/bin/project-nginx-entrypoint:ro
       - ./deploy/enable-https.sh:/usr/local/bin/enable-https:ro
+      - ./deploy/render-nginx.sh:/usr/local/bin/render-nginx:ro
       - ./mime.types:/etc/nginx/mime.types:ro
       - ./data/certbot/conf:/etc/letsencrypt:ro
       - ./data/certbot/www:/var/www/certbot:ro
@@ -40,9 +48,11 @@ services:
 
   certbot:
     image: certbot/certbot:v4.2.0
+    profiles: ["maintenance"]
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
 
 volumes:
   staticfiles:
+  database:

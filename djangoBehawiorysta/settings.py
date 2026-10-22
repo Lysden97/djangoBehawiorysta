@@ -9,14 +9,18 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+
 import os
 from pathlib import Path
+from urllib.parse import urlsplit
+
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env_file = os.getenv('DJANGO_ENV_FILE', '.env.local')
+env_file = os.getenv("DJANGO_ENV_FILE", ".env.local")
 load_dotenv(BASE_DIR / env_file)
 
 
@@ -24,76 +28,77 @@ def env_bool(name, default=False):
     value = os.getenv(name)
     if value is None:
         return default
-    return value.strip().lower() in {'1', 'true', 'yes', 'on'}
+    return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env_bool('DEBUG', False)
+DEBUG = env_bool("DEBUG", False)
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:8011').split(',')
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost:8011").split(",")
 
 
-SECURE_SSL_REDIRECT = env_bool('SECURE_SSL_REDIRECT', not DEBUG)
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = env_bool("SECURE_SSL_REDIRECT", not DEBUG)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_HSTS_SECONDS = 0 if DEBUG else 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
 
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'website.apps.WebsiteConfig',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "website.apps.WebsiteConfig",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'djangoBehawiorysta.urls'
+ROOT_URLCONF = "djangoBehawiorysta.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "website.context_processors.site_config",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'djangoBehawiorysta.wsgi.application'
+WSGI_APPLICATION = "djangoBehawiorysta.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3'
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.getenv("DATABASE_PATH", str(BASE_DIR / "db.sqlite3")),
+        "OPTIONS": {"timeout": 20},
     }
 }
 
@@ -103,16 +108,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -120,9 +125,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'pl'
+LANGUAGE_CODE = "pl"
 
-TIME_ZONE = 'Europe/Warsaw'
+TIME_ZONE = "Europe/Warsaw"
 
 USE_I18N = True
 
@@ -132,29 +137,92 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / "static",
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+        if DEBUG
+        else "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+    },
+}
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Email Settings
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_PORT')
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', True)
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
 
 # ReCaptcha Settings
-RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
-RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
+RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_PRIVATE_KEY")
+
+SITE_URL = os.getenv("SITE_URL", "http://localhost:8000").rstrip("/")
+CONTACT_EMAIL = os.getenv("CONTACT_EMAIL", "contact@example.com")
+CONTACT_PHONE = os.getenv("CONTACT_PHONE", "")
+BUSINESS_ADDRESS = os.getenv("BUSINESS_ADDRESS", "")
+CONTACT_RECIPIENTS = [
+    v.strip() for v in os.getenv("CONTACT_RECIPIENTS", CONTACT_EMAIL).split(",") if v.strip()
+]
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "noreply@example.com")
+EMAIL_BACKEND = os.getenv(
+    "EMAIL_BACKEND",
+    "django.core.mail.backends.console.EmailBackend"
+    if DEBUG
+    else "django.core.mail.backends.smtp.EmailBackend",
+)
+EMAIL_TIMEOUT = int(os.getenv("EMAIL_TIMEOUT", "10"))
+RECAPTCHA_ENABLED = env_bool("RECAPTCHA_ENABLED", True)
+RECAPTCHA_VERIFY_URL = os.getenv(
+    "RECAPTCHA_VERIFY_URL", "https://www.google.com/recaptcha/api/siteverify"
+)
+RECAPTCHA_TIMEOUT = int(os.getenv("RECAPTCHA_TIMEOUT", "5"))
+RECAPTCHA_HOSTNAMES = os.getenv("RECAPTCHA_HOSTNAMES", urlsplit(SITE_URL).hostname or "").split(",")
+TRUST_PROXY_IP = env_bool("TRUST_PROXY_IP", False)
+CONTACT_ATTEMPT_LIMIT = int(os.getenv("CONTACT_ATTEMPT_LIMIT", "5"))
+CONTACT_SEND_LIMIT = int(os.getenv("CONTACT_SEND_LIMIT", "3"))
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+DATA_UPLOAD_MAX_MEMORY_SIZE = 65536
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 30
+
+if not DEBUG:
+    required = [
+        "SECRET_KEY",
+        "SITE_URL",
+        "ALLOWED_HOSTS",
+        "CSRF_TRUSTED_ORIGINS",
+        "DEFAULT_FROM_EMAIL",
+        "CONTACT_RECIPIENTS",
+        "CONTACT_EMAIL",
+        "EMAIL_HOST",
+        "RECAPTCHA_PUBLIC_KEY",
+        "RECAPTCHA_PRIVATE_KEY",
+    ]
+    missing = [name for name in required if not os.getenv(name)]
+    if missing:
+        raise ImproperlyConfigured("Missing production settings: " + ", ".join(missing))
+    if not RECAPTCHA_ENABLED or urlsplit(SITE_URL).scheme != "https":
+        raise ImproperlyConfigured("Production requires HTTPS SITE_URL and reCAPTCHA.")
+    if EMAIL_BACKEND != "django.core.mail.backends.smtp.EmailBackend":
+        raise ImproperlyConfigured("Production requires the SMTP email backend.")
+
+if (
+    not CONTACT_RECIPIENTS
+    or min(CONTACT_ATTEMPT_LIMIT, CONTACT_SEND_LIMIT, EMAIL_TIMEOUT, RECAPTCHA_TIMEOUT) < 1
+):
+    raise ImproperlyConfigured("Recipients, positive limits and timeouts are required.")

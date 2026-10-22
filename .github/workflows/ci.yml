@@ -1,0 +1,56 @@
+name: Quality and security
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 7 * * 1'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: python manage.py check --settings=djangoBehawiorysta.test_settings
+      - run: python manage.py makemigrations --check --dry-run --settings=djangoBehawiorysta.test_settings
+      - run: coverage run --source=website manage.py test --settings=djangoBehawiorysta.test_settings
+      - run: coverage report
+      - run: for script in deploy/*.sh entrypoint.prod.sh; do bash -n "$script"; done
+      - name: Validate Compose and build production image
+        run: |
+          cp .env.example .env.prod
+          cp .env.ssl.example .env.ssl
+          docker compose config --quiet
+          docker build -t behawiorysta:test .
+          docker run --rm behawiorysta:test python manage.py check --settings=djangoBehawiorysta.test_settings
+      - name: Verify production image excludes development tools
+        run: |
+          docker run --rm --network none behawiorysta:test python -c "from importlib.util import find_spec; assert all(find_spec(name) is None for name in ('playwright', 'ruff', 'coverage', 'pip_audit'))"
+      - name: Collect static files as non-root with a fresh volume
+        run: |
+          docker run --rm --network none \
+            --mount type=volume,destination=/app/staticfiles \
+            --entrypoint /bin/sh behawiorysta:test -ec '
+              test "$(id -u)" -ne 0
+              python manage.py collectstatic --noinput --settings=djangoBehawiorysta.test_settings
+              test -s /app/staticfiles/website/css/site.css
+            '
+      - name: Proxy DNS recovery and static cache policy
+        run: python scripts/test_nginx_integration.py --app-image behawiorysta:test
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install pip-audit
+      - run: pip-audit -r requirements.txt

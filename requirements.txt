@@ -1,5 +1,15 @@
-﻿Django==5.2.5
+# Production dependencies (Python 3.13).
+Django==5.2.18
 gunicorn==23.0.0
-python-dotenv==1.1.1
-requests==2.32.4
+python-dotenv==1.2.2
+requests==2.33.0
 tzdata==2025.2
+
+# Transitive dependencies, pinned to keep production installs reproducible.
+asgiref==3.12.1
+certifi==2026.10.19
+charset-normalizer==3.5.0
+idna==3.18
+packaging==26.3
+sqlparse==0.6.0
+urllib3==2.8.0

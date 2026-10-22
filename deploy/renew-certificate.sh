@@ -6,10 +6,8 @@ cd "$PROJECT_DIR"
 
 if docker compose version >/dev/null 2>&1; then
     COMPOSE=(docker compose)
-elif command -v docker-compose >/dev/null 2>&1; then
-    COMPOSE=(docker-compose)
 else
-    echo "Nie znaleziono Docker Compose (docker compose ani docker-compose)." >&2
+    echo "Wymagany jest Docker Compose v2 (docker compose)." >&2
     exit 1
 fi
 

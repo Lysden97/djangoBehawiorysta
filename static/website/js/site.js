@@ -1,18 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var phoneInput = document.getElementById('phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function () {
-            phoneInput.value = phoneInput.value
-                .replace(/\D/g, '')
-                .replace(/(\d{3})(?=\d)/g, '$1 ')
-                .trim();
-        });
-    }
-
-    var dateInput = document.getElementById('preferred-date');
+    var dateInput = document.getElementById('id_preferred_date');
     if (dateInput && window.flatpickr) {
         window.flatpickr(dateInput, {
-            dateFormat: 'd.m.Y',
+            dateFormat: 'Y-m-d',
+            altInput: true,
+            altFormat: 'd.m.Y',
             minDate: 'today',
             maxDate: new Date().fp_incr(90),
             locale: 'pl',
@@ -22,17 +14,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.needs-validation').forEach(function (form) {
         form.addEventListener('submit', function (event) {
-            clearValidationMessages();
-
-            var termsValid = validateRequiredCheckbox('terms', 'termsValidationMessage', 'Trzeba zaakceptować zgodę na przetwarzanie danych.');
-            var privacyValid = validateRequiredCheckbox('privacy-policy', 'privacyValidationMessage', 'Trzeba zaakceptować politykę prywatności.');
-
-            if (!form.checkValidity() || !termsValid || !privacyValid) {
+            if (!form.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();
                 form.classList.add('was-validated');
 
-                var firstInvalid = form.querySelector(':invalid, .validation-message');
+                var firstInvalid = form.querySelector(':invalid');
                 if (firstInvalid) {
                     firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
@@ -61,24 +48,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-
-function clearValidationMessages() {
-    document.querySelectorAll('.validation-message').forEach(function (message) {
-        message.remove();
-    });
-}
-
-function validateRequiredCheckbox(inputId, messageId, message) {
-    var input = document.getElementById(inputId);
-    var container = document.getElementById(messageId);
-
-    if (!input || !container || input.checked) {
-        return true;
-    }
-
-    var messageElement = document.createElement('p');
-    messageElement.className = 'validation-message';
-    messageElement.textContent = message;
-    container.appendChild(messageElement);
-    return false;
-}

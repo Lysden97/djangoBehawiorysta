@@ -1,0 +1,23 @@
+{% autoescape off %}Nowe zgłoszenie konsultacji
+
+Dane kontaktowe
+Imię i nazwisko: {{ name }} {{ last_name }}
+E-mail: {{ email }}
+Telefon: {{ phone }}
+Dzielnica / miejscowość: {{ address|default:"Nie podano" }}
+
+Informacje o wizycie
+Preferowany termin: {{ preferred_date|date:"Y-m-d" }}
+Typ wizyty: {{ appointment_type }}
+
+Informacje o zwierzęciu
+Imię i wiek: {{ animal_info }}
+Gatunek i rasa: {{ animal_breed }}
+Płeć: {{ gender }}
+
+Opis problemu:
+{{ message }}
+
+Wiadomość wysłana automatycznie z formularza kontaktowego.
+© {% now "Y" %} Eli Zalewski - Behawiorysta Psów i Kotów
+{% endautoescape %}

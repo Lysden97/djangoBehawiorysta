@@ -1,12 +1,12 @@
 #!/bin/sh
 set -eu
 
-CERTIFICATE=/etc/letsencrypt/live/behawiorysta.warszawa.pl/fullchain.pem
+CERTIFICATE=/etc/letsencrypt/live/${LETSENCRYPT_DOMAIN:?}/fullchain.pem
 
 if [ -f "$CERTIFICATE" ]; then
-    cp /etc/nginx/project/nginx.conf /etc/nginx/nginx.conf
+    /bin/sh /usr/local/bin/render-nginx /etc/nginx/project/nginx.conf
 else
-    cp /etc/nginx/project/nginx.bootstrap.conf /etc/nginx/nginx.conf
+    /bin/sh /usr/local/bin/render-nginx /etc/nginx/project/nginx.bootstrap.conf
 fi
 
 exec nginx -g 'daemon off;'

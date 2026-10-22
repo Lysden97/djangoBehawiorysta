@@ -6,10 +6,8 @@ cd "$PROJECT_DIR"
 
 if docker compose version >/dev/null 2>&1; then
     COMPOSE=(docker compose)
-elif command -v docker-compose >/dev/null 2>&1; then
-    COMPOSE=(docker-compose)
 else
-    echo "Nie znaleziono Docker Compose (docker compose ani docker-compose)." >&2
+    echo "Wymagany jest Docker Compose v2 (docker compose)." >&2
     exit 1
 fi
 
@@ -24,13 +22,11 @@ source .env.ssl
 set +a
 
 : "${LETSENCRYPT_EMAIL:?Ustaw LETSENCRYPT_EMAIL w .env.ssl}"
-LETSENCRYPT_DOMAIN="${LETSENCRYPT_DOMAIN:-behawiorysta.warszawa.pl}"
-LETSENCRYPT_WWW_DOMAIN="${LETSENCRYPT_WWW_DOMAIN:-www.behawiorysta.warszawa.pl}"
-
-if [[ "$LETSENCRYPT_DOMAIN" != "behawiorysta.warszawa.pl" ]] || \
-   [[ "$LETSENCRYPT_WWW_DOMAIN" != "www.behawiorysta.warszawa.pl" ]]; then
-    echo "Domeny muszą odpowiadać nazwom i ścieżkom ustawionym w nginx.conf." >&2
-    exit 1
+: "${LETSENCRYPT_DOMAIN:?Ustaw LETSENCRYPT_DOMAIN w .env.ssl}"
+LETSENCRYPT_WWW_DOMAIN="${LETSENCRYPT_WWW_DOMAIN:-}"
+domains=(--domain "$LETSENCRYPT_DOMAIN")
+if [[ -n "$LETSENCRYPT_WWW_DOMAIN" ]]; then
+    domains+=(--domain "$LETSENCRYPT_WWW_DOMAIN")
 fi
 
 mkdir -p data/certbot/conf data/certbot/www
@@ -39,12 +35,11 @@ mkdir -p data/certbot/conf data/certbot/www
 if [[ ! -f "data/certbot/conf/live/${LETSENCRYPT_DOMAIN}/fullchain.pem" ]]; then
     "${COMPOSE[@]}" run --rm certbot certonly \
         --webroot --webroot-path /var/www/certbot \
-        --email "$LETSENCRYPT_EMAIL" --agree-tos --no-eff-email \
-        --domain "$LETSENCRYPT_DOMAIN" \
-        --domain "$LETSENCRYPT_WWW_DOMAIN"
+        --email "$LETSENCRYPT_EMAIL" --agree-tos --non-interactive \
+        --cert-name "$LETSENCRYPT_DOMAIN" "${domains[@]}"
 fi
 
-"${COMPOSE[@]}" exec nginx /bin/sh /usr/local/bin/enable-https
+"${COMPOSE[@]}" exec -T nginx /bin/sh /usr/local/bin/enable-https
 "${COMPOSE[@]}" up -d
 
 echo "Certyfikat Let's Encrypt jest aktywny."

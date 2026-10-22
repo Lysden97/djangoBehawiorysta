@@ -1,137 +1,114 @@
+import logging
+from smtplib import SMTPException
+
 from django.conf import settings
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.db import DatabaseError
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
+from django.utils.html import escape
 from django.views import View
 from django.views.generic import TemplateView
-import requests
 
-SITE_URL = 'https://behawiorysta.warszawa.pl'
+from .catalog import SERVICES
+from .forms import ContactForm
+from .rate_limit import client_identity, release, reserve
+from .seo import homepage_structured_data
+from .services import send_contact_email, verify_recaptcha
+
+logger = logging.getLogger(__name__)
+
+
+def homepage_context(form=None):
+    structured = homepage_structured_data()
+    return {
+        "form": form if form is not None else ContactForm(),
+        "services": SERVICES,
+        "structured_data": structured,
+    }
 
 
 class IndexView(TemplateView):
-    template_name = 'index.html'
+    template_name = "index.html"
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['recaptcha_public_key'] = settings.RECAPTCHA_PUBLIC_KEY
-        return context
+        return {**super().get_context_data(**kwargs), **homepage_context()}
 
 
 class PrivacyPolicyView(TemplateView):
-    template_name = 'privacy-policy.html'
+    template_name = "privacy-policy.html"
 
 
 class ContactView(View):
     def get(self, request):
-        # Formularz znajduje się na stronie głównej. Przekierowanie zapobiega
-        # udostępnianiu tej samej treści także pod adresem /contact/.
-        return redirect('/#contact', permanent=True)
+        return redirect("/#contact", permanent=True)
 
     def post(self, request):
+        form = ContactForm(request.POST)
+
+        def failure(message, status, retry_after=None):
+            form.is_valid()
+            form.add_error(None, message)
+            response = render(request, "index.html", homepage_context(form), status=status)
+            response["Cache-Control"] = "no-store"
+            response["X-Robots-Tag"] = "noindex"
+            if retry_after is not None:
+                response["Retry-After"] = str(retry_after)
+            return response
+
         try:
-            recaptcha_response = request.POST.get('g-recaptcha-response')
+            identity = client_identity(request)
+            attempt = reserve(identity, "attempt", settings.CONTACT_ATTEMPT_LIMIT, 900)
+            if attempt.key is None:
+                return failure(
+                    "Zbyt wiele prób. Spróbuj ponownie później.", 429, attempt.retry_after
+                )
+            if not form.is_valid():
+                return failure("Popraw zaznaczone pola.", 400)
+            if not verify_recaptcha(request.POST.get("g-recaptcha-response", "")):
+                return failure(
+                    "Nie udało się potwierdzić reCAPTCHA. Wykonaj weryfikację ponownie.", 400
+                )
+            delivery = reserve(identity, "send", settings.CONTACT_SEND_LIMIT, 3600)
+            if delivery.key is None:
+                return failure(
+                    "Osiągnięto limit wiadomości. Spróbuj ponownie później.",
+                    429,
+                    delivery.retry_after,
+                )
+        except DatabaseError:
+            logger.error("contact_rate_limit_unavailable")
+            return failure("Formularz jest chwilowo niedostępny. Spróbuj ponownie później.", 503)
 
-            if not recaptcha_response:
-                messages.error(request, 'Proszę zaznaczyć pole reCAPTCHA.')
-                return redirect('/#contact')
-
-            verify_data = {
-                'secret': settings.RECAPTCHA_PRIVATE_KEY,
-                'response': recaptcha_response,
-            }
-
-            response = requests.post('https://www.google.com/recaptcha/api/siteverify', verify_data)
-            result = response.json()
-
-            if not result['success']:
-                messages.error(request, 'Weryfikacja reCAPTCHA nie powiodła się. Spróbuj ponownie.')
-                return redirect('/#contact')
-
-            name = request.POST.get('name')
-            last_name = request.POST.get('last-name')
-            email = request.POST.get('email')
-            phone = request.POST.get('phone')
-            address = request.POST.get('address')
-            preferred_date = request.POST.get('preferred-date')
-            animal_info = request.POST.get('animal-info')
-            gender = request.POST.get('gender')
-            animal_breed = request.POST.get('animal-breed')
-            appointment_type = request.POST.get('appointment-type')
-            message = request.POST.get('message')
-            newsletter = request.POST.get('newsletter') == 'on'
-
-            if not all([
-                name,
-                last_name,
-                email,
-                phone,
-                address,
-                preferred_date,
-                animal_info,
-                gender,
-                animal_breed,
-                appointment_type,
-                message,
-            ]):
-                messages.error(request, 'Wszystkie pola są wymagane.')
-                return redirect('/#contact')
-
-            context = {
-                'name': name,
-                'last_name': last_name,
-                'email': email,
-                'phone': phone,
-                'address': address,
-                'preferred_date': preferred_date,
-                'animal_info': animal_info,
-                'gender': gender,
-                'animal_breed': animal_breed,
-                'appointment_type': appointment_type,
-                'message': message,
-                'newsletter_status': 'Tak' if newsletter else 'Nie',
-            }
-
-            html_message = render_to_string('emails/appointment_notification.html', context)
-            plain_message = strip_tags(html_message)
-
-            send_mail(
-                subject=f'Nowa wiadomość od {name} {last_name}',
-                message=plain_message,
-                from_email=email,
-                recipient_list=['eli.behawiorysta@gmail.com'],
-                html_message=html_message,
+        try:
+            if send_contact_email(form.cleaned_data) != 1:
+                raise SMTPException("No message accepted")
+        except (SMTPException, OSError):
+            logger.error("contact_delivery_failed")
+            try:
+                release(delivery.key)
+            except DatabaseError:
+                logger.error("contact_rate_limit_release_failed")
+            return failure(
+                "Nie udało się wysłać wiadomości. Spróbuj ponownie później lub skontaktuj się telefonicznie.",
+                503,
             )
-
-            messages.success(request, 'Twoja wiadomość została wysłana. Dziękujemy!')
-            return redirect('/#contact')
-
-        except Exception:
-            messages.error(request, 'Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.')
-            return redirect('/#contact')
+        messages.success(
+            request, "Twoje zgłoszenie zostało wysłane. Termin potwierdzimy w odpowiedzi."
+        )
+        return redirect("/#contact")
 
 
 def robots_txt(request):
-    content = (
-        "User-agent: *\n"
-        "Allow: /\n"
-        "Disallow: /contact/\n"
-        f"Sitemap: {SITE_URL}/sitemap.xml\n"
+    return HttpResponse(
+        f"User-agent: *\nAllow: /\nSitemap: {settings.SITE_URL}/sitemap.xml\n",
+        content_type="text/plain; charset=utf-8",
     )
-    return HttpResponse(content, content_type='text/plain; charset=utf-8')
 
 
 def sitemap_xml(request):
     content = f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>{SITE_URL}/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-</urlset>
-"""
-    return HttpResponse(content, content_type='application/xml; charset=utf-8')
+  <url><loc>{escape(settings.SITE_URL)}/</loc></url>
+</urlset>"""
+    return HttpResponse(content, content_type="application/xml; charset=utf-8")

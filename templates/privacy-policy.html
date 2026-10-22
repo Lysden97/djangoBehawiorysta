@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}Polityka prywatności | Eli Zalewski{% endblock %}
-{% block meta_description %}Polityka prywatności strony behawiorysta.warszawa.pl oraz informacje o przetwarzaniu danych osobowych przez Eli Zalewski.{% endblock %}
+{% block meta_description %}Polityka prywatności strony {{ site_url }} oraz informacje o przetwarzaniu danych osobowych przez Eli Zalewski.{% endblock %}
 {% block robots %}noindex,follow{% endblock %}
-{% block canonical_url %}https://behawiorysta.warszawa.pl/privacy-policy/{% endblock %}
+{% block canonical_url %}{{ site_url }}/privacy-policy/{% endblock %}
 {% block og_title %}Polityka prywatności | Eli Zalewski{% endblock %}
-{% block og_description %}Informacje o przetwarzaniu danych osobowych i plikach cookies na stronie behawiorysta.warszawa.pl.{% endblock %}
-{% block og_url %}https://behawiorysta.warszawa.pl/privacy-policy/{% endblock %}
+{% block og_description %}Informacje o przetwarzaniu danych osobowych i plikach cookies na stronie {{ site_url }}.{% endblock %}
+{% block og_url %}{{ site_url }}/privacy-policy/{% endblock %}
 
 {% block content %}
 <section class="privacy-page bg-warm">
@@ -19,12 +19,11 @@
                 <div class="form-shell">
                     <h2>I. Informacje ogólne</h2>
                     <ol>
-                        <li>Niniejsza polityka dotyczy usług świadczonych przez Bartosza Zalewskiego na zasadach nierejestrowanej działalności gospodarczej, pod nazwą <strong>Eli Zalewski - Behawiorysta Psów i Kotów</strong>, Balkonowa 3/21, 03-329 Warszawa.</li>
+                        <li>Niniejsza polityka dotyczy usług świadczonych przez Bartosza Zalewskiego na zasadach nierejestrowanej działalności gospodarczej, pod nazwą <strong>Eli Zalewski - Behawiorysta Psów i Kotów</strong>, {{ business_address }}.</li>
                         <li>Operatorem strony oraz administratorem danych osobowych jest <strong>Bartosz Zalewski</strong>.</li>
-                        <li>Adres kontaktowy poczty elektronicznej operatora: <a href="mailto:elizalewski@proton.me">elizalewski@proton.me</a>.</li>
+                        <li>Adres kontaktowy poczty elektronicznej operatora: <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.</li>
                         <li>Operator jest administratorem danych osobowych podanych dobrowolnie na stronie internetowej oraz podczas konsultacji.</li>
                         <li>Dane osobowe są wykorzystywane w celu obsługi zgłoszeń, realizacji usług, prowadzenia dokumentacji przypadku oraz ewentualnego dochodzenia, ustalenia lub obrony roszczeń.</li>
-                        <li>W przypadku wyrażenia zgody dane mogą być wykorzystywane także do przesyłania informacji marketingowych. Zgodę można wycofać w każdej chwili.</li>
                     </ol>
 
                     <h2>II. Ochrona danych</h2>
