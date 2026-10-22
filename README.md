@@ -7,7 +7,11 @@ catalogue, pricing, contact requests and search-engine metadata. The contact for
 sends a consultation request by email; it does **not** reserve an appointment.
 The provider confirms availability separately.
 
-![Desktop preview of the application](docs/screenshot.png)
+<a href="docs/screenshot.png">
+  <img src="docs/screenshot.png"
+       alt="Desktop preview of the application"
+       width="400">
+</a>
 
 The screenshot is generated from the local application with example contact
 details and reCAPTCHA disabled. [Mobile preview](docs/mobile.png).

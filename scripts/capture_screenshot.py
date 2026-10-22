@@ -45,6 +45,8 @@ def main():
                 )
                 if page.locator(".cc-dismiss").is_visible():
                     page.locator(".cc-dismiss").click()
+                # Acceptance starts a fade-out; wait before capturing the full page.
+                page.locator(".cc-window").wait_for(state="hidden")
                 assert page.locator("h1").count() == 1
                 assert page.locator(".service-card").count() == 6
                 assert page.locator("#contact").count() == 1
@@ -53,6 +55,7 @@ def main():
                 destination.parent.mkdir(exist_ok=True)
                 page.screenshot(path=str(destination), full_page=True)
                 page.set_viewport_size({"width": 390, "height": 844})
+                page.locator(".cc-window").wait_for(state="hidden")
                 page.screenshot(path=str(ROOT / "docs" / "mobile.png"), full_page=True)
                 assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
                 browser.close()
