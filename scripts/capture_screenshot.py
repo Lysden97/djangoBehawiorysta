@@ -53,13 +53,16 @@ def main():
                 assert page.locator("#id_message").get_attribute("maxlength") == "4000"
                 destination = ROOT / "docs" / "screenshot.png"
                 destination.parent.mkdir(exist_ok=True)
+                hero = page.locator("#top").bounding_box()
+                assert hero is not None
+                page.screenshot(path=str(ROOT / "docs" / "hero.png"), full_page=True, clip=hero)
                 page.screenshot(path=str(destination), full_page=True)
                 page.set_viewport_size({"width": 390, "height": 844})
                 page.locator(".cc-window").wait_for(state="hidden")
                 page.screenshot(path=str(ROOT / "docs" / "mobile.png"), full_page=True)
                 assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
                 browser.close()
-                print("Screenshot captured; desktop and mobile layout checks passed.")
+                print("Hero, desktop and mobile screenshots captured; layout checks passed.")
         finally:
             server.shutdown()
             server.server_close()
